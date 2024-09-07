@@ -1,29 +1,65 @@
-# Create T3 App
+# Flowgress
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## 主要機能
 
-## What's next? How do I make an app with this?
+1. 翌日計画
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+   - 新しいタスクの追加
+   - タスクの分割と整理
+   - 翌日の計画立案
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+2. 当日実行
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+   - タスクの優先順位付け
+   - 所要時間の見積もり
+   - タスクの実行と進捗管理
 
-## Learn More
+3. 記録と分析
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+   - タスクの実行時間記録
+   - 完了タスクの管理
+   - 生産性分析とレポート
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+4. 習慣化支援
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+   - 定期的なタスクの自動生成
+   - 長期プロジェクトの管理
+   - 目標達成のための進捗トラッキング
 
-## How do I deploy this?
+## 技術スタック
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- フロントエンド: Next.js, React, TypeScript
+- バックエンド: tRPC, Prisma
+- データベース: PostgreSQL
+- 認証: NextAuth.js
+- スタイリング: Tailwind CSS
+
+## 開発環境のセットアップ
+
+1. リポジトリをクローンする
+
+   ```bash
+   git clone https://github.com/amaotone/flowgress.git
+   cd flowgress
+   ```
+
+2. 依存関係をインストールする
+
+   ```bash
+   pnpm install
+   ```
+
+3. 環境変数を設定する
+   `.env.example`ファイルを`.env`にコピーし、必要な値を設定してください。
+
+4. データベースをセットアップする
+
+   ```bash
+   pnpm db:push
+   ```
+
+5. 開発サーバーを起動する
+
+   ```bash
+   pnpm dev
+   ```
