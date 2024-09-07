@@ -14,7 +14,8 @@
     "lint": "biome lint src",
     "lint:fix": "biome check --write src",
     "format": "biome format --write src",
-    "start": "next start"
+    "start": "next start",
+    "prepare": "lefthook install"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.6.0",
@@ -38,6 +39,7 @@
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "lefthook": "^1.7.15",
     "postcss": "^8.4.39",
     "prisma": "^5.14.0",
     "tailwindcss": "^3.4.3",
@@ -46,5 +48,6 @@
   "ct3aMetadata": {
     "initVersion": "7.37.0"
   },
-  "packageManager": "pnpm@9.9.0"
+  "packageManager": "pnpm@9.9.0",
+  "prepare": "lefthook install"
 }
