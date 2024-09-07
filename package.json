@@ -11,7 +11,9 @@
     "db:studio": "prisma studio",
     "dev": "next dev",
     "postinstall": "prisma generate",
-    "lint": "next lint",
+    "lint": "biome lint src",
+    "lint:fix": "biome check --apply src",
+    "format": "biome format --write src",
     "start": "next start"
   },
   "dependencies": {
@@ -32,17 +34,11 @@
     "zod": "^3.23.3"
   },
   "devDependencies": {
-    "@types/eslint": "^8.56.10",
+    "@biomejs/biome": "^1.8.3",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.1.0",
-    "@typescript-eslint/parser": "^8.1.0",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.4",
     "postcss": "^8.4.39",
-    "prettier": "^3.3.2",
-    "prettier-plugin-tailwindcss": "^0.6.5",
     "prisma": "^5.14.0",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.5.3"
