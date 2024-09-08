@@ -1,3 +1,4 @@
+import type { Task } from "@prisma/client";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
@@ -19,7 +20,7 @@ export const taskRouter = createTRPCRouter({
       });
     }),
 
-  getAll: protectedProcedure.query(({ ctx }) => {
+  getAll: protectedProcedure.query(({ ctx }): Promise<Task[]> => {
     return ctx.db.task.findMany({
       where: {
         userId: ctx.session.user.id,

@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Textarea } from "~/components/ui/textarea";
 import { api } from "~/trpc/react";
 
 export function TaskForm() {
@@ -24,33 +26,24 @@ export function TaskForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-300"
-        >
+        <label htmlFor="title" className="block text-sm font-medium">
           タイトル
         </label>
-        <input
-          type="text"
+        <Input
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         />
       </div>
       <div>
-        <label
-          htmlFor="description"
-          className="block text-sm font-medium text-gray-300"
-        >
+        <label htmlFor="description" className="block text-sm font-medium">
           説明
         </label>
-        <textarea
+        <Textarea
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         />
       </div>
       <Button type="submit" disabled={createTask.isPending}>

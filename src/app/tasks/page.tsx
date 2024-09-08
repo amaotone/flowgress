@@ -2,7 +2,7 @@ import { TaskForm } from "~/components/TaskForm";
 import { api } from "~/trpc/server";
 
 export default async function TasksPage() {
-  const tasks = await api.task.getAll.query();
+  const tasks = await api.task.getAll();
 
   return (
     <div className="container mx-auto px-4 py-8">

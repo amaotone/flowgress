@@ -1,53 +1,99 @@
+import type { Task } from "@prisma/client";
 import { TaskForm } from "~/components/TaskForm";
+import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
 
 export default async function Home() {
   const session = await getServerAuthSession();
-  const tasks = await api.task.getAll();
+
+  let tasks: Task[] = [];
+  let error = null;
+
+  if (session) {
+    try {
+      tasks = await api.task.getAll();
+    } catch (e) {
+      console.error("タスクの取得に失敗しました:", e);
+      error = "タスクの取得に失敗しました。";
+    }
+  }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          flow<span className="text-[hsl(280,100%,70%)]">gress</span>
-        </h1>
-
-        {session ? (
-          <div className="w-full max-w-md">
-            <TaskForm />
-            <ul className="mt-8 space-y-4">
-              {tasks.map((task) => (
-                <li
-                  key={task.id}
-                  className="rounded-lg border border-white/10 p-4 shadow"
-                >
-                  <h2 className="text-lg font-semibold">{task.title}</h2>
-                  {task.description && (
-                    <p className="mt-2 text-gray-300">{task.description}</p>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <p className="text-2xl">ログインしてタスクを管理しましょう</p>
-        )}
-
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex flex-col items-center justify-center gap-4">
-            <p className="text-center text-2xl text-white">
-              {session && <span>Logged in as {session.user?.name}</span>}
-            </p>
-            <a
-              href={session ? "/api/auth/signout" : "/api/auth/signin"}
-              className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-            >
-              {session ? "Sign out" : "Sign in"}
-            </a>
-          </div>
+    <main className="container mx-auto p-4">
+      {session ? (
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>新しいタスク</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TaskForm />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>タスク一覧</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {error ? (
+                <p className="text-red-500">{error}</p>
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>タイトル</TableHead>
+                      <TableHead>説明</TableHead>
+                      <TableHead>ステータス</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {tasks.map((task) => (
+                      <TableRow key={task.id}>
+                        <TableCell className="font-medium">
+                          {task.title}
+                        </TableCell>
+                        <TableCell>{task.description}</TableCell>
+                        <TableCell>{task.status}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
+            </CardContent>
+          </Card>
         </div>
-      </div>
+      ) : (
+        <Card className="mx-auto max-w-md">
+          <CardHeader>
+            <CardTitle>ようこそ</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4">ログインしてタスクを管理しましょう</p>
+            <Button asChild>
+              <a href="/api/auth/signin">ログイン</a>
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
+      {session && (
+        <div className="mt-8 text-center">
+          <p className="mb-2">ログイン中: {session.user?.name}</p>
+          <Button variant="outline" asChild>
+            <a href="/api/auth/signout">ログアウト</a>
+          </Button>
+        </div>
+      )}
     </main>
   );
 }
